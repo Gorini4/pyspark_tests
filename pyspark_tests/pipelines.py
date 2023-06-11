@@ -21,6 +21,7 @@ def run(spark: SparkSession):
         df.write.parquet("more_huge_data")
 
     input_df = spark.read.parquet("huge_data")
-    transformed_df1 = transform1(input_df)
-    transformed_df2 = transform2(transformed_df1)
-    write_df(transformed_df2)
+    transformed_df = input_df\
+        .transform(transform1)\
+        .transform(transform2)
+    write_df(transformed_df)
